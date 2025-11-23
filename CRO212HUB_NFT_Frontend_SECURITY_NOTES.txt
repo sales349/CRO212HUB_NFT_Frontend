@@ -1,0 +1,96 @@
+# SECURITY NOTES – CRO212HUB Frontend
+
+Project: CRO212HUB – NFT Generator and Launchpad  
+Repo: CRO212HUB_NFT_Frontend  
+File: SECURITY_NOTES.md  
+Owner: TO FILL IN BY DEV (name, GitHub handle)  
+Last updated: TO FILL IN BY DEV (YYYY-MM-DD)
+
+## Purpose
+
+This file defines security expectations for the **frontend** of the CRO212HUB NFT Generator and Launchpad.
+
+The frontend should be:
+- A clean React or Next.js application.
+- Free of any hidden behavior, tracking, or malicious scripts.
+- Easy to review and understand.
+
+If the implementation ever changes behavior in a way that conflicts with this document, the code must be updated OR this document must be updated so they match.
+
+---
+
+## 1. Allowed External Services and Scripts
+
+The frontend is allowed to talk to or load from ONLY the following kinds of services:
+
+- Wallet connection libraries and providers  
+  - Examples: MetaMask, standard EVM wallet connectors.
+- The official CRO212HUB backend API  
+  - Base URL: TO FILL IN BY DEV (example: https://api.cro212hub.com)
+- Cronos network via the user’s wallet (RPC through MetaMask or similar)
+
+Not allowed without my written approval:
+- Extra analytics / trackers (Google Analytics, Facebook Pixel, etc).
+- Any third-party script that can inject ads, popups, or tracking.
+- Any network calls to random domains not documented here.
+
+If a new external service is added, the developer must:
+1. Add it to this file.
+2. Explain what it does and why it is needed.
+
+---
+
+## 2. Frontend Behavior Requirements
+
+The frontend must NOT:
+- Store or log private keys or seed phrases (ever).
+- Ask the user for their private key or seed phrase.
+- Silently send wallet addresses, balances, or other user data to unknown services.
+
+The frontend MAY:
+- Read the connected wallet address and network using standard wallet APIs.
+- Call the backend API for:
+  - Project info
+  - Trait/generation status
+  - Rarity report downloads
+  - Mint configuration
+- Interact with the NFT mint contract (for minting) through the user’s wallet.
+
+All critical actions (minting, connecting wallets, etc) must be:
+- Clear to the user.
+- Shown in the UI as a button or action the user explicitly clicks.
+
+---
+
+## 3. Admin UI Access (If Any Frontend Admin Pages)
+
+If there is an admin UI exposed in the frontend:
+- It must be protected (for example with a login or access token).
+- Admin-only actions should be clearly separated from public pages.
+- Admin components and routes must be clearly named and easy to find in the code.
+
+The frontend must NOT:
+- Hide secret admin routes or features that are not documented.
+
+---
+
+## 4. Code Transparency
+
+The frontend code must be:
+- Readable and not deliberately obfuscated.
+- Using normal build tooling. Minified production bundles are OK, but original source must be available in the repo.
+
+Developer agrees:
+- No hidden “Easter egg” code that changes behavior based on specific wallet addresses.
+- No code that behaves differently for the repo owner vs other users without documenting it here.
+
+---
+
+## 5. Security Issues and Reporting
+
+If the developer notices a potential security issue (in frontend, backend, or contracts), they should:
+- Document it here briefly.
+- Notify the project owner.
+
+Developer security notes (optional, short list):
+- TO FILL IN BY DEV
