@@ -15,6 +15,7 @@ export default function MintPage() {
   const [contractInfo, setContractInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [minting, setMinting] = useState(false);
+  const [walletBalance, setWalletBalance] = useState(null);
 
   // AppKit hooks
   const { open } = useAppKit();
@@ -25,12 +26,25 @@ export default function MintPage() {
   // Get chain ID from CAIP address (format: eip155:25:0x...)
   const chainId = caipAddress ? parseInt(caipAddress.split(":")[1]) : null;
 
+  // Fetch wallet balance
+  const fetchWalletBalance = async () => {
+    if (!walletProvider || !address) return;
+    try {
+      const provider = new ethers.BrowserProvider(walletProvider);
+      const balance = await provider.getBalance(address);
+      setWalletBalance(ethers.formatEther(balance));
+    } catch (error) {
+      console.error("Error fetching wallet balance:", error);
+    }
+  };
+
   // Fetch contract data
   const fetchContractData = async () => {
     try {
       setLoading(true);
       const info = await LaunchpadContract.getContractInfo(walletProvider, address);
       setContractInfo(info);
+      await fetchWalletBalance();
     } catch (error) {
       console.error("Error fetching contract data:", error);
     } finally {
@@ -91,6 +105,25 @@ export default function MintPage() {
     setMinting(true);
 
     try {
+      // Check wallet balance
+      const provider = new ethers.BrowserProvider(walletProvider);
+      const balance = await provider.getBalance(address);
+
+      // Calculate total cost (mint price + estimated gas ~0.01 CRO)
+      const estimatedGas = ethers.parseEther("0.01");
+      const totalCost = totalPrice + estimatedGas;
+
+      if (balance < totalCost) {
+        const balanceInCro = ethers.formatEther(balance);
+        const neededInCro = ethers.formatEther(totalPrice);
+        setMessage({
+          type: "error",
+          text: `Insufficient balance. You have ${parseFloat(balanceInCro).toFixed(4)} CRO but need ${parseFloat(neededInCro).toFixed(2)} CRO + gas fees`
+        });
+        setMinting(false);
+        return;
+      }
+
       const receipt = await LaunchpadContract.mintPublic(
         walletProvider,
         quantity,
@@ -213,6 +246,12 @@ export default function MintPage() {
             <>
               <div className="wallet-address">
                 {address?.slice(0, 6)}...{address?.slice(-4)}
+              </div>
+              <div className="row" style={{ marginTop: "4px" }}>
+                <span className="label">Your balance</span>
+                <span className="value">
+                  {walletBalance ? `${parseFloat(walletBalance).toFixed(4)} CRO` : "Loading..."}
+                </span>
               </div>
               <div className="row" style={{ marginTop: "4px" }}>
                 <span className="label">You minted</span>
