@@ -132,7 +132,7 @@ export default function MintPage() {
 
       const explorerUrl = chainId === 25
         ? `https://cronoscan.com/tx/${receipt.hash}`
-        : `https://testnet.cronoscan.com/tx/${receipt.hash}`;
+        : `hhttps://explorer.cronos.org/testnet/tx/${receipt.hash}`;
 
       setMessage({
         type: "success",
@@ -336,7 +336,7 @@ export default function MintPage() {
 
       <div className="links">
         <p>
-          Contract: <a href={`https://cronoscan.com/address/${contractInfo ? "0x..." : "#"}`} target="_blank" rel="noopener noreferrer">
+          Contract: <a href={`https://explorer.cronos.org/testnet/token/0x97a26591f2263490bfadd0eed6651cb50b1b6d20`} target="_blank" rel="noopener noreferrer">
             View on Cronoscan
           </a> ·
           Collection: <a href="#" onClick={(e) => e.preventDefault()}>
