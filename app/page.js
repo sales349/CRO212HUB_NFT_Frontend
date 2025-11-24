@@ -5,9 +5,9 @@ import { useAppKit, useDisconnect, useAppKitAccount, useAppKitProvider } from "@
 import { ethers } from "ethers";
 import { LaunchpadContract } from "../lib/launchpad";
 
-// Collection info - TODO: Update these values
-const COLLECTION_NAME = "Blood Oracles – Fireborn Genesis";
-const COLLECTION_DESCRIPTION = "Cinematic semi-realistic warriors on Cronos. 3,500 uniquely generated NFTs with detailed traits, rarity, and future upgrade paths through the CRO212HUB Forge.";
+// Collection info
+const COLLECTION_NAME = "TEST COLLECTION";
+const COLLECTION_DESCRIPTION = "A test NFT collection on Cronos testnet. 100 unique NFTs for testing the minting platform.";
 
 export default function MintPage() {
   const [quantity, setQuantity] = useState(1);
