@@ -1,0 +1,243 @@
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #050510;
+  color: #f5f5f5;
+}
+
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px 16px 40px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.logo {
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+.network-badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #1f2937;
+  font-size: 12px;
+}
+
+h1 {
+  font-size: 28px;
+  margin: 0 0 8px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #d1d5db;
+  margin-bottom: 24px;
+  max-width: 640px;
+}
+
+.layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.card {
+  background: radial-gradient(circle at top left, #1f2937, #020617);
+  border-radius: 16px;
+  padding: 18px 16px;
+  flex: 1 1 280px;
+  border: 1px solid #111827;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+}
+
+.card h2 {
+  margin-top: 0;
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.label {
+  color: #9ca3af;
+}
+
+.value {
+  font-weight: 600;
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.badge-success {
+  background: rgba(22, 163, 74, 0.15);
+  color: #4ade80;
+}
+
+.badge-danger {
+  background: rgba(220, 38, 38, 0.15);
+  color: #fca5a5;
+}
+
+.wallet-address {
+  font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 12px;
+  background: #020617;
+  border-radius: 999px;
+  padding: 4px 10px;
+  border: 1px solid #111827;
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+.quantity-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0;
+}
+
+.qty-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 1px solid #4b5563;
+  background: #020617;
+  color: #f9fafb;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.qty-btn:hover:not(:disabled) {
+  background: #1f2937;
+  border-color: #6366f1;
+}
+
+.qty-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.qty-display {
+  min-width: 32px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.primary-btn {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  background: linear-gradient(90deg, #6366f1, #ec4899);
+  color: #f9fafb;
+  transition: all 0.2s;
+}
+
+.primary-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+}
+
+.primary-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.secondary-btn {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid #4b5563;
+  background: transparent;
+  color: #e5e7eb;
+  cursor: pointer;
+  font-size: 13px;
+  margin-top: 6px;
+  transition: all 0.2s;
+}
+
+.secondary-btn:hover:not(:disabled) {
+  background: #1f2937;
+  border-color: #6366f1;
+}
+
+.secondary-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.status-box {
+  margin-top: 18px;
+  font-size: 13px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(22, 163, 74, 0.08);
+  border: 1px solid rgba(22, 163, 74, 0.4);
+  color: #4ade80;
+}
+
+.status-box.error {
+  background: rgba(220, 38, 38, 0.08);
+  border-color: rgba(220, 38, 38, 0.4);
+  color: #fca5a5;
+}
+
+.status-box a {
+  color: #a5b4fc;
+  text-decoration: none;
+}
+
+.status-box a:hover {
+  text-decoration: underline;
+}
+
+.links {
+  margin-top: 18px;
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+.links a {
+  color: #60a5fa;
+  text-decoration: none;
+}
+
+.links a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
