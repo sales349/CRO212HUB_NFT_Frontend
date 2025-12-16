@@ -1,0 +1,52 @@
+{
+  "name": "cro212hub-nft-generator",
+  "version": "2.0.0",
+  "description": "NFT Generator & Launchpad for Cronos Blockchain",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --webpack -p 3001",
+    "build": "next build --webpack",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css,json}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,css,json}\""
+  },
+  "dependencies": {
+    "next": "^16.0.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "@reown/appkit": "^1.2.0",
+    "@reown/appkit-adapter-ethers": "^1.2.0",
+    "ethers": "^6.13.4",
+    "@wagmi/core": "^2.13.0",
+    "@wagmi/connectors": "^5.1.0",
+    "viem": "^2.21.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.6.0",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "^16.0.3",
+    "prettier": "^3.3.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "keywords": [
+    "nft",
+    "generator",
+    "cronos",
+    "blockchain",
+    "web3",
+    "ethereum",
+    "launchpad"
+  ],
+  "author": "CRO212HUB",
+  "license": "MIT"
+}
