@@ -1,10 +1,8 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* Basic Configuration */
   reactStrictMode: true,
 
-  /* Image Optimization */
   images: {
     remotePatterns: [
       {
@@ -20,13 +18,16 @@ const nextConfig: NextConfig = {
         hostname: 'ipfs.io',
       },
       {
+        protocol: 'https',
+        hostname: 'gateway.pinata.cloud',
+      },
+      {
         protocol: 'http',
         hostname: 'localhost',
       },
     ],
   },
 
-  /* Webpack Configuration */
   webpack: (config) => {
     config.resolve.fallback = {
       ...config.resolve.fallback,
@@ -35,23 +36,21 @@ const nextConfig: NextConfig = {
       tls: false,
     };
 
-    // External packages that should not be bundled
     config.externals.push('pino-pretty', 'lokijs', 'encoding');
+
+    // Fix MetaMask SDK react-native warning
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@react-native-async-storage/async-storage': false,
+    };
 
     return config;
   },
 
-  /* Server Components Configuration */
   experimental: {
     serverActions: {
       bodySizeLimit: '10mb',
     },
-  },
-
-  /* Environment Variables (public only) */
-  env: {
-    NEXT_PUBLIC_APP_NAME: 'CRO212HUB NFT Generator',
-    NEXT_PUBLIC_APP_VERSION: '2.0.0',
   },
 };
 
