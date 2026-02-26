@@ -25,7 +25,10 @@ class APIClient {
       throw error;
     }
 
-    return isJSON ? response.json() : response.text();
+    if (isJSON) {
+      return response.json() as Promise<T>;
+    }
+    return response.text() as unknown as T;
   }
 
   async request<T = unknown>(

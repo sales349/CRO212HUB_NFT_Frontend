@@ -1,442 +1,171 @@
-// Landing Page - Matching Mint Page Design
-
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
 import { useAppKit, useAppKitAccount } from '@reown/appkit/react';
-import { useProjects } from '@/lib/hooks';
-import { formatAddress } from '@/lib/utils';
+
+const features = [
+  {
+    title: 'AI Generation',
+    description: 'Generate unique NFTs with our Intelligent Layer V1 engine. Customize traits, preview rarity, and mint directly on Cronos.',
+    icon: '🎨',
+  },
+  {
+    title: 'Marketplace',
+    description: 'Buy and sell NFTs with transparent fees. 3% buyer service fee, 3% seller deduction. No hidden costs.',
+    icon: '🏪',
+  },
+  {
+    title: 'Vault & Remix',
+    description: 'Save your favorite presets, remix traits, build custom avatars. Your creative workspace on-chain.',
+    icon: '💎',
+  },
+  {
+    title: 'Low Fees on Cronos',
+    description: 'Mint and trade on Cronos blockchain. Fast transactions, minimal gas costs, EIP-2981 royalties.',
+    icon: '⚡',
+  },
+];
+
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 },
+};
 
 export default function HomePage() {
-  const router = useRouter();
   const { open } = useAppKit();
-  const { address, isConnected } = useAppKitAccount();
-  const { projects, loading } = useProjects();
-
-  const [activeSection, setActiveSection] = useState<'home' | 'projects' | 'create'>('home');
-
-  const stats = {
-    totalProjects: projects.length,
-    generatedCollections: projects.filter((p) => p.status === 'generated').length,
-    deployedContracts: projects.filter((p) => p.status === 'deployed').length,
-  };
+  const { isConnected } = useAppKitAccount();
 
   return (
-    <div className="page">
-      {/* Header */}
-      <header className="header">
-        <div className="logo">CRO212HUB</div>
-        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+    <div className="mx-auto max-w-7xl px-4 sm:px-6">
+      {/* Hero */}
+      <section className="flex flex-col items-center py-20 text-center sm:py-32">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
+            <span className="text-gradient">Create, Mint & Trade</span>
+            <br />
+            <span className="text-foreground">NFTs on Cronos</span>
+          </h1>
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
+            AI-powered generation, transparent marketplace fees, and a creative vault —
+            all on Cronos blockchain with low gas costs.
+          </p>
+        </motion.div>
+
+        <motion.div
+          className="mt-10 flex flex-wrap justify-center gap-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+        >
           {isConnected ? (
-            <>
-              <div className="wallet-address">{formatAddress(address)}</div>
-              <button
-                onClick={() => router.push('/my-projects')}
-                className="connect-btn"
-                style={{ width: 'auto', padding: '4px 12px' }}
-              >
-                My Projects
-              </button>
-            </>
+            <Link
+              href="/mint"
+              className="glow-hover rounded-full bg-primary px-8 py-3 text-sm font-semibold text-primary-foreground transition-all hover:opacity-90"
+            >
+              Start Creating
+            </Link>
           ) : (
-            <button onClick={() => open()} className="connect-btn" style={{ width: 'auto' }}>
-              Connect Wallet
+            <button
+              onClick={() => open()}
+              className="glow-hover rounded-full bg-primary px-8 py-3 text-sm font-semibold text-primary-foreground transition-all hover:opacity-90"
+            >
+              Connect Wallet to Start
             </button>
           )}
-        </div>
-      </header>
-
-      {/* Navigation Tabs */}
-      <div style={{ display: 'flex', gap: '12px', marginBottom: '20px', flexWrap: 'wrap' }}>
-        {(['home', 'projects', 'create'] as const).map((section) => (
-          <button
-            key={section}
-            onClick={() => setActiveSection(section)}
-            style={{
-              padding: '6px 16px',
-              borderRadius: '999px',
-              border: activeSection === section ? '1px solid #6366f1' : '1px solid #4b5563',
-              background:
-                activeSection === section ? 'rgba(99, 102, 241, 0.1)' : 'transparent',
-              color: '#e5e7eb',
-              cursor: 'pointer',
-              fontSize: '13px',
-              textTransform: 'capitalize',
-              fontWeight: activeSection === section ? '600' : '400',
-            }}
+          <Link
+            href="/marketplace"
+            className="rounded-full border border-border px-8 py-3 text-sm font-semibold text-foreground transition-all hover:border-primary/50 hover:bg-muted"
           >
-            {section}
-          </button>
-        ))}
-      </div>
+            Browse Marketplace
+          </Link>
+        </motion.div>
 
-      {/* Home Section */}
-      {activeSection === 'home' && (
-        <div className="fade-in">
-          <h1>NFT Generator & Launchpad for Cronos</h1>
-          <p className="subtitle">
-            Create, generate, and launch your NFT collection on Cronos blockchain. Upload trait
-            layers, generate unique artwork, calculate rarity scores, and deploy smart contracts -
-            all in one unified platform.
+        {/* Trust signal */}
+        <motion.div
+          className="mt-8 flex items-center gap-2 rounded-full border border-border bg-muted px-4 py-2 text-xs text-muted-foreground"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          <span className="h-2 w-2 rounded-full bg-green-500" />
+          Mint on Cronos — Low Fees, Fast Transactions
+        </motion.div>
+      </section>
+
+      {/* Feature Cards */}
+      <section className="pb-20">
+        <motion.div
+          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+        >
+          {features.map((feature) => (
+            <motion.div
+              key={feature.title}
+              variants={item}
+              className="group rounded-xl border border-border bg-background-secondary p-6 transition-all hover:border-primary/30 glow-hover"
+            >
+              <div className="mb-4 text-3xl">{feature.icon}</div>
+              <h3 className="mb-2 text-lg font-semibold text-foreground">
+                {feature.title}
+              </h3>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                {feature.description}
+              </p>
+            </motion.div>
+          ))}
+        </motion.div>
+      </section>
+
+      {/* Fee Transparency Section */}
+      <section className="border-t border-border pb-20 pt-16">
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="text-2xl font-bold text-foreground sm:text-3xl">
+            Transparent Fee Model
+          </h2>
+          <p className="mt-4 text-muted-foreground">
+            No hidden costs. Every fee is visible before you transact.
           </p>
-
-          {/* Feature Cards */}
-          <div className="layout" style={{ marginBottom: '20px' }}>
-            <section className="card">
-              <h2>🎨 NFT Generator</h2>
-              <div className="row">
-                <span className="label">Layer-Based</span>
-                <span className="value">
-                  <span className="badge badge-success">Active</span>
-                </span>
-              </div>
-              <div className="row">
-                <span className="label">Supported Layers</span>
-                <span className="value">6 Types</span>
-              </div>
-              <div className="row">
-                <span className="label">Format</span>
-                <span className="value">PNG</span>
-              </div>
-              <p className="links">
-                Upload trait layers (Background, Body, Eyes, Mouth, Clothes, Accessories) and
-                generate unique NFT collections with randomized combinations.
-              </p>
-            </section>
-
-            <section className="card">
-              <h2>📊 Rarity Engine</h2>
-              <div className="row">
-                <span className="label">Algorithm</span>
-                <span className="value">Trait Frequency</span>
-              </div>
-              <div className="row">
-                <span className="label">Export</span>
-                <span className="value">CSV</span>
-              </div>
-              <div className="row">
-                <span className="label">Analytics</span>
-                <span className="value">
-                  <span className="badge badge-info">Enabled</span>
-                </span>
-              </div>
-              <p className="links">
-                Automatic rarity calculation for every token with detailed statistics, rankings,
-                and CSV export for comprehensive data analysis.
-              </p>
-            </section>
-
-            <section className="card">
-              <h2>🚀 Smart Contracts</h2>
-              <div className="row">
-                <span className="label">Standard</span>
-                <span className="value">ERC-721</span>
-              </div>
-              <div className="row">
-                <span className="label">Network</span>
-                <span className="value">Cronos</span>
-              </div>
-              <div className="row">
-                <span className="label">Revenue Split</span>
-                <span className="value">
-                  <span className="badge badge-success">Yes</span>
-                </span>
-              </div>
-              <p className="links">
-                Deploy production-ready ERC-721 smart contracts with built-in revenue splitting,
-                minting functionality, and pause controls.
-              </p>
-            </section>
-
-            <section className="card">
-              <h2>💎 Mint Pages</h2>
-              <div className="row">
-                <span className="label">Customizable</span>
-                <span className="value">
-                  <span className="badge badge-info">Yes</span>
-                </span>
-              </div>
-              <div className="row">
-                <span className="label">Wallet Connect</span>
-                <span className="value">Reown AppKit</span>
-              </div>
-              <div className="row">
-                <span className="label">Responsive</span>
-                <span className="value">
-                  <span className="badge badge-success">Mobile</span>
-                </span>
-              </div>
-              <p className="links">
-                Beautiful, customizable mint pages with wallet integration, real-time supply
-                tracking, and seamless minting experience.
-              </p>
-            </section>
+        </div>
+        <div className="mx-auto mt-10 grid max-w-4xl gap-6 sm:grid-cols-2">
+          {/* Primary */}
+          <div className="rounded-xl border border-border bg-background-secondary p-6">
+            <div className="mb-3 text-sm font-semibold uppercase tracking-wider text-primary">
+              Primary Mints
+            </div>
+            <div className="text-3xl font-bold text-foreground">2%</div>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Platform fee deducted from creator proceeds. Buyers pay the clean listed price.
+            </p>
           </div>
-
-          {/* Platform Stats */}
-          <section className="card">
-            <h2>Platform Statistics</h2>
-            <div className="layout">
-              <div>
-                <div className="row">
-                  <span className="label">Total Projects</span>
-                  <span className="value" style={{ fontSize: '18px' }}>
-                    {stats.totalProjects}
-                  </span>
-                </div>
-              </div>
-              <div>
-                <div className="row">
-                  <span className="label">Generated Collections</span>
-                  <span className="value" style={{ fontSize: '18px' }}>
-                    {stats.generatedCollections}
-                  </span>
-                </div>
-              </div>
-              <div>
-                <div className="row">
-                  <span className="label">Deployed Contracts</span>
-                  <span className="value" style={{ fontSize: '18px' }}>
-                    {stats.deployedContracts}
-                  </span>
-                </div>
-              </div>
+          {/* Secondary */}
+          <div className="rounded-xl border border-border bg-background-secondary p-6">
+            <div className="mb-3 text-sm font-semibold uppercase tracking-wider text-secondary">
+              Secondary Sales
             </div>
-
-            {!isConnected && (
-              <div>
-                <button onClick={() => open()} className="primary-btn">
-                  Connect Wallet to Get Started
-                </button>
-              </div>
-            )}
-
-            {isConnected && (
-              <div>
-                <button onClick={() => router.push('/my-projects')} className="primary-btn">
-                  Go to My Projects
-                </button>
-                <button
-                  onClick={() => setActiveSection('projects')}
-                  className="secondary-btn"
-                >
-                  Browse All Projects
-                </button>
-              </div>
-            )}
-          </section>
-        </div>
-      )}
-
-      {/* Projects Section */}
-      {activeSection === 'projects' && (
-        <div className="fade-in">
-          <h1>All NFT Projects</h1>
-          <p className="subtitle">
-            Browse and explore NFT collections created on CRO212HUB. Each project showcases unique
-            traits, rarity distributions, and minting details.
-          </p>
-
-          {loading ? (
-            <div className="status-box info">Loading projects...</div>
-          ) : projects.length === 0 ? (
-            <div className="card">
-              <h2>No Projects Yet</h2>
-              <p className="links">
-                Be the first to create an NFT project on CRO212HUB. Connect your wallet and start
-                building your collection today.
-              </p>
-              <button
-                onClick={() => {
-                  if (isConnected) {
-                    router.push('/my-projects');
-                  } else {
-                    open();
-                  }
-                }}
-                className="primary-btn"
-              >
-                {isConnected ? 'Create Project' : 'Connect Wallet'}
-              </button>
-            </div>
-          ) : (
-            <div className="layout">
-              {projects.map((project) => (
-                <section
-                  key={project.id}
-                  className="card"
-                  onClick={() => router.push(`/project/${project.id}`)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <h2>{project.name}</h2>
-                  <div className="row" style={{ marginTop: '8px' }}>
-                    <span className="label">Symbol</span>
-                    <span className="value">{project.symbol}</span>
-                  </div>
-                  <div className="row">
-                    <span className="label">Status</span>
-                    <span className="value">
-                      <span
-                        className={`badge ${
-                          project.status === 'deployed'
-                            ? 'badge-success'
-                            : project.status === 'generated'
-                              ? 'badge-info'
-                              : project.status === 'traits_uploaded'
-                                ? 'badge-warning'
-                                : 'badge-danger'
-                        }`}
-                      >
-                        {project.status.replace('_', ' ')}
-                      </span>
-                    </span>
-                  </div>
-                  <div className="row">
-                    <span className="label">Max Supply</span>
-                    <span className="value">{project.max_supply.toLocaleString()}</span>
-                  </div>
-                  <div className="row">
-                    <span className="label">Mint Price</span>
-                    <span className="value">{project.mint_price} CRO</span>
-                  </div>
-                  {project.description && (
-                    <p className="links" style={{ marginTop: '10px' }}>
-                      {project.description.length > 100
-                        ? `${project.description.substring(0, 100)}...`
-                        : project.description}
-                    </p>
-                  )}
-                </section>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Create Section */}
-      {activeSection === 'create' && (
-        <div className="fade-in">
-          <h1>Create Your NFT Collection</h1>
-          <p className="subtitle">
-            Launch your own NFT project on Cronos blockchain. Follow these simple steps to bring
-            your collection to life.
-          </p>
-
-          <div className="layout">
-            <section className="card">
-              <h2>Step 1: Connect Wallet</h2>
-              <div className="row">
-                <span className="label">Status</span>
-                <span className="value">
-                  <span className={`badge ${isConnected ? 'badge-success' : 'badge-danger'}`}>
-                    {isConnected ? 'Connected' : 'Not Connected'}
-                  </span>
-                </span>
-              </div>
-              {isConnected && (
-                <div className="row">
-                  <span className="label">Address</span>
-                  <div className="wallet-address" style={{ marginBottom: '0' }}>
-                    {formatAddress(address)}
-                  </div>
-                </div>
-              )}
-              <p className="links">
-                Connect your Cronos wallet to get started. We support MetaMask, WalletConnect, and
-                all major Web3 wallets.
-              </p>
-              {!isConnected && <button onClick={() => open()} className="primary-btn">Connect Wallet</button>}
-            </section>
-
-            <section className="card">
-              <h2>Step 2: Create Project</h2>
-              <div className="row">
-                <span className="label">Required</span>
-                <span className="value">Name, Symbol, Supply</span>
-              </div>
-              <div className="row">
-                <span className="label">Optional</span>
-                <span className="value">Description, Treasury</span>
-              </div>
-              <p className="links">
-                Fill in your project details including collection name, symbol, max supply, and
-                mint price. Set up revenue splits and treasury wallet.
-              </p>
-            </section>
-
-            <section className="card">
-              <h2>Step 3: Upload Traits</h2>
-              <div className="row">
-                <span className="label">Layers</span>
-                <span className="value">6 Trait Types</span>
-              </div>
-              <div className="row">
-                <span className="label">Format</span>
-                <span className="value">PNG (Recommended)</span>
-              </div>
-              <div className="row">
-                <span className="label">Max Size</span>
-                <span className="value">10MB per file</span>
-              </div>
-              <p className="links">
-                Upload PNG images for each trait layer: Background, Body, Eyes, Mouth, Clothes,
-                and Accessories. Mix and match to create unique combinations.
-              </p>
-            </section>
-
-            <section className="card">
-              <h2>Step 4: Generate & Deploy</h2>
-              <div className="row">
-                <span className="label">Generation</span>
-                <span className="value">Automated</span>
-              </div>
-              <div className="row">
-                <span className="label">Rarity</span>
-                <span className="value">Auto-calculated</span>
-              </div>
-              <div className="row">
-                <span className="label">Deployment</span>
-                <span className="value">One-click</span>
-              </div>
-              <p className="links">
-                Generate your entire collection with one click. Calculate rarity scores, export
-                CSV data, and deploy your smart contract to Cronos.
-              </p>
-            </section>
+            <div className="text-3xl font-bold text-foreground">6%</div>
+            <p className="mt-2 text-sm text-muted-foreground">
+              3% buyer service fee (added at checkout) + 3% seller deduction.
+              Supports liquidity, treasury/yield vault, and $HUB buybacks.
+            </p>
           </div>
-
-          {isConnected ? (
-            <div className="status-box">
-              ✅ Your wallet is connected! You're ready to create your first project.
-              <button
-                onClick={() => router.push('/my-projects')}
-                className="primary-btn"
-                style={{ marginTop: '12px' }}
-              >
-                Go to Dashboard
-              </button>
-            </div>
-          ) : (
-            <div className="status-box warning">
-              ⚠️ Please connect your wallet to continue. Click the "Connect Wallet" button above.
-            </div>
-          )}
         </div>
-      )}
-
-      {/* Footer */}
-      <div className="links">
-        <p>
-          CRO212HUB NFT Generator & Launchpad · Built on Cronos ·{' '}
-          <a href="https://cronos.org" target="_blank" rel="noopener noreferrer">
-            Learn more about Cronos
-          </a>
-        </p>
-        <p style={{ marginTop: '6px' }}>
-          Create · Generate · Launch · All rights reserved © {new Date().getFullYear()}
-        </p>
-      </div>
+      </section>
     </div>
   );
 }

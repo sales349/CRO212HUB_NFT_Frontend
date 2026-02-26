@@ -5,3 +5,4 @@ export * from './traits';
 export * from './rarity';
 export * from './api';
 export * from './web3';
+export * from './generator';

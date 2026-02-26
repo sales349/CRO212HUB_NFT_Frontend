@@ -38,6 +38,8 @@ export interface GenerationStatus {
   status: string;
   generated_count: number;
   progress_percentage: number;
+  progress?: number;
+  error?: string;
 }
 
 export interface GenerationRequest {
