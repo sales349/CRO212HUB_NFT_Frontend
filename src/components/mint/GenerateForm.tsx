@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Wand2 } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
+import { generateFormSchema } from '@/lib/utils/form-schemas';
 import { TraitSelector } from './TraitSelector';
 import { TRAIT_OPTIONS, type TraitSelection } from '@/types/generator';
 
@@ -34,17 +35,15 @@ export function GenerateForm({ onGenerate, isLoading }: GenerateFormProps) {
         e.preventDefault();
         setError(null);
 
-        if (!prompt.trim()) {
-            setError('Please enter a description for your NFT');
+        const result = generateFormSchema.safeParse({ prompt, traits });
+
+        if (!result.success) {
+            const firstIssue = result.error.issues[0];
+            setError(firstIssue?.message ?? 'Invalid form data');
             return;
         }
 
-        if (prompt.length > 500) {
-            setError('Description must be 500 characters or less');
-            return;
-        }
-
-        onGenerate(prompt, traits);
+        onGenerate(result.data.prompt, result.data.traits);
     };
 
     return (
