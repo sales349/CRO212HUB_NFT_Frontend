@@ -22,6 +22,10 @@ const nextConfig: NextConfig = {
         hostname: 'gateway.pinata.cloud',
       },
       {
+        protocol: 'https',
+        hostname: 'rose-near-alpaca-365.mypinata.cloud',
+      },
+      {
         protocol: 'http',
         hostname: 'localhost',
       },
