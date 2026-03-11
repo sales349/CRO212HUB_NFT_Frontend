@@ -44,6 +44,18 @@ export function Navbar() {
                     >
                         Vault
                     </Link>
+                    <Link
+                        href="/profile"
+                        className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                    >
+                        Profile
+                    </Link>
+                    <Link
+                        href="/fees"
+                        className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                    >
+                        Fees
+                    </Link>
                 </nav>
 
                 {/* Right side: Chain info + Wallet */}

@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Trash2, Wand2, User } from 'lucide-react';
+import { Trash2, Wand2, User, Store } from 'lucide-react';
 import { RarityBadge } from '@/components/mint/RarityBadge';
 import { formatRelativeTime } from '@/lib/utils/formatting';
 import type { Preset } from '@/types/generator';
@@ -11,10 +11,11 @@ import type { Preset } from '@/types/generator';
 interface PresetCardProps {
     preset: Preset;
     onDelete?: (id: string) => void;
+    onSell?: (preset: Preset) => void;
     isDeleting?: boolean;
 }
 
-export function PresetCard({ preset, onDelete, isDeleting }: PresetCardProps) {
+export function PresetCard({ preset, onDelete, onSell, isDeleting }: PresetCardProps) {
     return (
         <motion.div
             layout
@@ -53,6 +54,15 @@ export function PresetCard({ preset, onDelete, isDeleting }: PresetCardProps) {
 
                 {/* Hover Actions */}
                 <div className="absolute inset-0 flex items-center justify-center gap-2 bg-black/60 opacity-0 transition-opacity group-hover:opacity-100">
+                    {onSell && (
+                        <button
+                            onClick={() => onSell(preset)}
+                            className="flex h-10 w-10 items-center justify-center rounded-full bg-green-500 text-white transition-transform hover:scale-110"
+                            title="Sell on Marketplace"
+                        >
+                            <Store className="h-4 w-4" />
+                        </button>
+                    )}
                     <Link
                         href={`/remix?preset=${preset._id}`}
                         className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground transition-transform hover:scale-110"

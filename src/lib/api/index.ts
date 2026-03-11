@@ -7,3 +7,6 @@ export { generationApi } from './generation';
 export { rarityApi } from './rarity';
 export { generateApi } from './generate';
 export { vaultApi } from './vault';
+export { reputationApi } from './reputation';
+export { featureFlagsApi } from './feature-flags';
+export { feesApi } from './fees';

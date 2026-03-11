@@ -9,10 +9,11 @@ interface PresetGridProps {
     presets: Preset[];
     isLoading?: boolean;
     onDelete?: (id: string) => void;
+    onSell?: (preset: Preset) => void;
     deletingId?: string | null;
 }
 
-export function PresetGrid({ presets, isLoading, onDelete, deletingId }: PresetGridProps) {
+export function PresetGrid({ presets, isLoading, onDelete, onSell, deletingId }: PresetGridProps) {
     if (isLoading) {
         return (
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -48,6 +49,7 @@ export function PresetGrid({ presets, isLoading, onDelete, deletingId }: PresetG
                         key={preset._id}
                         preset={preset}
                         onDelete={onDelete}
+                        onSell={onSell}
                         isDeleting={deletingId === preset._id}
                     />
                 ))}
