@@ -71,6 +71,7 @@ export default function ListingDetailPage() {
     const params = useParams();
     const nftId = params.nftId as string;
     const { data: listing, isLoading, error } = useListing(nftId);
+    const [buyModalOpen, setBuyModalOpen] = useState(false);
 
     if (isLoading) {
         return (
@@ -105,9 +106,6 @@ export default function ListingDetailPage() {
             </div>
         );
     }
-
-    const [buyModalOpen, setBuyModalOpen] = useState(false);
-
     const handleBuy = () => {
         setBuyModalOpen(true);
     };
