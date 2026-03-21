@@ -161,7 +161,7 @@ export default function HomePage() {
             <div className="text-3xl font-bold text-foreground">6%</div>
             <p className="mt-2 text-sm text-muted-foreground">
               3% buyer service fee (added at checkout) + 3% seller deduction.
-              Supports liquidity, treasury/yield vault, and $HUB buybacks.
+              Supports liquidity 2%, treasury/yield vault 2%, $HUB buybacks 2%.
             </p>
           </div>
         </div>
